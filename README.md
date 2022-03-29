@@ -1,2 +1,3 @@
 # CGMS
-Análisis de material granular gruesto 
+Análisis de material granular grueso 
+
