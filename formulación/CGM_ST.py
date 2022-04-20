@@ -21,8 +21,8 @@ locale.setlocale(
 #Material paredes
 O.materials.append(FrictMat(young=5e6,poisson=0.5,frictionAngle=0,density=0,label='walls'))
 ## create walls around the packing
-walls=aabbWalls([mn,mx],thickness=thick,material='walls')
-wallIds=O.bodies.append(walls)
+##walls=aabbWalls([mn,mx],thickness=thick,material='walls')
+##wallIds=O.bodies.append(walls)
 #Define Materials
 Rockfill=O.materials.append(FrictMat(young=100e6,poisson=0.3,frictionAngle=radians(30),density=2650,label='spheres'))
 
@@ -31,7 +31,6 @@ surf = gts.read(open('talud2.coarse.gts'))
 gtstalud=O.bodies.append(pack.gtsSurface2Facets(surf, color=(1, 0, 1)))
 
 
-# fill this solid with triaxial packing; it will compute minimum-volume oriented bounding box
 # to minimize the number of throw-away spheres.
 # It does away with about 3k spheres for rParticle 3e-2
 sp1 = SpherePack()
@@ -52,18 +51,10 @@ O.engines = [
                 [Ip2_FrictMat_FrictMat_FrictPhys()],
                 [Law2_ScGeom_FrictPhys_CundallStrack()]
         ),
-        NewtonIntegrator(gravity=(0, -9.81,0), damping=0.99),
+        NewtonIntegrator(gravity=(0, -9.81,0), damping=0.3),
 ]
 
 ##Aqui podria ir la condicion de estabilidad de las particulas dentro del gts, como se muestra a continuacion##
-
-#while 1:#Se busca estabilizar las particulas dentro del gts.
-  #O.run(1000, True)
-  ##the global unbalanced force on dynamic bodies, thus excluding boundaries, which are not at equilibrium
-  #unb=unbalancedForce()
-  #print('unbalanced force:',unb)
-  #if unb<stabilityThreshold:
-    #break
 
 #Fija las pastirculas exteriores de la figura en cada eje
 #AXIS Y (vertical)
@@ -134,25 +125,6 @@ O.usesTimeStepper=True
 Gl1_Sphere.stripes=0
 yade.qt.Controller(), yade.qt.View()
 
-#######################################
-### APLICAR PRESION DE CONFINAMIENTO ###
-#######################################
-"""
-while 1:
-  O.run(1000, True)
-  #the global unbalanced force on dynamic bodies, thus excluding boundaries, which are not at equilibrium
-  unb=unbalancedForce()
-  #average stress
-  #note: triax.stress(k) returns a stress vector, so we need to keep only the normal component
-  meanS=(triax.stress(triax.wall_right_id)[0]+triax.stress(triax.wall_top_id)[1]+triax.stress(triax.wall_front_id)[2])/3
-  print('unbalanced force:',unb,' mean stress: ',meanS)
-  if unb<stabilityThreshold*0.1 and abs(meanS+10000)/10000<0.001:
-    break
-
-O.save('compressedState'+key+'.xml')
-print("###      Isotropic state saved      ###")
-"""
-
 ##############################
 ### ELIMINAR EL GTS###
 ##############################
@@ -163,31 +135,6 @@ print("###      Isotropic state saved      ###")
 
 ######## ESTE CODIGO PUEDE SER MODIFICADO, POR SI POR EJEMPLO, SE QUIEREN INCREMENTOS DE ESFUERZOS IMPUESTOS ETC. VIENDO LOS EJEMPLOS DEL SIGUIENTE LINK: https://gricad-gitlab.univ-grenoble-alpes.fr/cailletr/yade/-/tree/d67436b26377d3e394760d3e3ba01e8cd7539cf7/examples/triax-tutorial####
 
-#####################################################
-###    EJEMPLO DE COMO REGISTRAR Y TRAZAR DATOS   ###
-#####################################################
-
-#from yade import plot
-
-### a function saving variables
-#def history():
-  	#plot.addData(e11=triax.strain[0], e22=triax.strain[1], e33=triax.strain[2],
-		    #s11=triax.stress(triax.wall_right_id)[0],
-		    #s22=triax.stress(triax.wall_top_id)[1],
-		    #s33=triax.stress(triax.wall_front_id)[2],
-		    #i=O.iter)
-
-#if 1:
-  ## include a periodic engine calling that function in the simulation loop
-  #O.engines=O.engines[0:5]+[PyRunner(iterPeriod=20,command='history()',label='recorder')]+O.engines[5:7]
-  ##O.engines.insert(4,PyRunner(iterPeriod=20,command='history()',label='recorder'))
-#else:
-  ## With the line above, we are recording some variables twice. We could in fact replace the previous
-  ## TriaxialRecorder
-  ## by our periodic engine. Uncomment the following line:
-  #O.engines[4]=PyRunner(iterPeriod=20,command='history()',label='recorder')
-
-#O.run(100,True)
 
 ### declare what is to plot. "None" is for separating y and y2 axis
 #plot.plots={'i':('e11','e22','e33',None,'s11','s22','s33')}
