@@ -1,7 +1,7 @@
 from __future__ import print_function
 ###################################################################
 ### Con stabilityThreshold=0.5 sera posible ejecutar el codigo de forma mas rapida y pasar a la etapa del triaxial
-readParamsFromTable(rParticle=0.09, rRelFuzz=0,rCoff=2,bot_limit=1,width=1,tot_limit=1,toy_limit=1,ejex_limit=5.5,num_spheres=500,thick = 0.01,key='_define_a_name_',stabilityThreshold=0.01)##Ojo,que el primer while del unbalanced force nunca llego al valor 0.01 del stabilityThreshold
+readParamsFromTable(rParticle=0.45, rRelFuzz=0,rCoff=2,bot_limit=1,width=1,tot_limit=1,toy_limit=1,ejex_limit=5.5,num_spheres=500,thick = 0.01,key='_define_a_name_',stabilityThreshold=0.01)##Ojo,que el primer while del unbalanced force nunca llego al valor 0.01 del stabilityThreshold
 from yade.params.table import *
 from numpy import arange
 from yade import pack
