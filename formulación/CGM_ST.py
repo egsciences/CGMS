@@ -1,4 +1,6 @@
 from __future__ import print_function
+from itertools import count
+from turtle import pos
 ###################################################################
 ### Con stabilityThreshold=0.5 sera posible ejecutar el codigo de forma mas rapida y pasar a la etapa del triaxial
 readParamsFromTable(rParticle=0.045, rRelFuzz=0,rCoff=2,bot_limit=1,width=1,tot_limit=1,toy_limit=1,ejex_limit=5.5,num_spheres=500,thick = 0.01,key='_define_a_name_',stabilityThreshold=0.01)##Ojo,que el primer while del unbalanced force nunca llego al valor 0.01 del stabilityThreshold
@@ -105,6 +107,12 @@ for s in ejexx:
 for b in ejexx: #reemplazar wall por top o ejexx layers
         b.state.blockedDOFs = 'xyz'
         b.state.vel = (0,0,0)
+
+count=0
+for b in rockfill:
+        if O.bodies[b].state.pos[1]>0:
+                count+=1
+        print(count)
 
 #################################################################
 ### CONDICION DE ESTABILIDAD DE LAS PARTICULAS DENTRO DEL GTS ###
