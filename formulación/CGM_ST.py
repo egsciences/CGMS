@@ -30,7 +30,7 @@ Rockfill=O.materials.append(FrictMat(young=100e6,poisson=0.3,frictionAngle=radia
 
 surf = gts.read(open('talud2.coarse.gts'))
 # Muestra la geometria gts en el modelo
-gtstalud=O.bodies.append(pack.gtsSurface2Facets(surf, color=(1, 0, 1)))
+#gtstalud=O.bodies.append(pack.gtsSurface2Facets(surf, color=(1, 0, 1)))
 
 
 # to minimize the number of throw-away spheres.
