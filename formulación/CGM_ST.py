@@ -110,7 +110,7 @@ for b in ejexx: #reemplazar wall por top o ejexx layers
 
 count=0
 for b in rockfill:
-        if O.bodies[b].state.pos[1]>0:
+        if O.bodies[b].state.pos[1]<0:
                 count+=1
         print(count)
 
