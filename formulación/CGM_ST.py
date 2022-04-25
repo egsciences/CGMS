@@ -72,40 +72,45 @@ for s in bot:
         if s.state.pos[1]<=bot_limit:
                 bot_limit = s.state.pos[1]#Define the minimal position Y (vertical) from the dense particles
                 bot_id = s.id
-        b.state.blockedDOFs = 'xyzXYZ'
-        b.state.vel = (0,0,0)
-
+        s.state.blockedDOFs = 'xyzXYZ'
+        s.state.vel = (0,0,0)
+        s.shape.color=(72/255.,72/255.,147/255.)
+        
 for s in tot:
         if s.state.pos[2]<=tot_limit:
                 tot_limit = s.state.pos[2]
                 tot_id = s.id
-        b.state.blockedDOFs = 'xyzXYZ'
-        b.state.vel = (0,0,0)
-
+        s.state.blockedDOFs = 'xyzXYZ'
+        s.state.vel = (0,0,0)
+        s.shape.color=(72/255.,72/255.,147/255.)
+        
 for s in toy:
         if s.state.pos[2]<=toy_limit:
                 toy_limit = s.state.pos[2]
                 toy_id = s.id
-        b.state.blockedDOFs = 'xyzXYZ'
-        b.state.vel = (0,0,0)
-
+        s.state.blockedDOFs = 'xyzXYZ'
+        s.state.vel = (0,0,0)
+        s.shape.color=(72/255.,72/255.,147/255.)
+        
 for s in ejex:
         if s.state.pos[0]<=ejex_limit:
                 ejex_limit = s.state.pos[0]
                 ejex_id = s.id
-        b.state.blockedDOFs = 'xyz'
-        b.state.vel = (0,0,0)
-
+        s.state.blockedDOFs = 'xyz'
+        s.state.vel = (0,0,0)
+        s.shape.color=(72/255.,72/255.,147/255.)
+        
 for s in ejexx:
         if s.state.pos[0]<=ejex_limit:
                 ejexx_limit = s.state.pos[0]
                 ejexx_id = s.id
-        b.state.blockedDOFs = 'xyz'
-        b.state.vel = (0,0,0)
-
+        s.state.blockedDOFs = 'xyz'
+        s.state.vel = (0,0,0)
+        s.shape.color=(72/255.,72/255.,147/255.)
+        
 count=0
-for b in rockfill:
-        if O.bodies[b].state.pos[1]<0:
+for s in rockfill:
+        if O.bodies[s].state.pos[1]<0:
                 count+=1
         print(count)
 
