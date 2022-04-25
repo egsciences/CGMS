@@ -72,7 +72,6 @@ for s in bot:
         if s.state.pos[1]<=bot_limit:
                 bot_limit = s.state.pos[1]#Define the minimal position Y (vertical) from the dense particles
                 bot_id = s.id
-for b in bot: 
         b.state.blockedDOFs = 'xyzXYZ'
         b.state.vel = (0,0,0)
 
@@ -80,7 +79,6 @@ for s in tot:
         if s.state.pos[2]<=tot_limit:
                 tot_limit = s.state.pos[2]
                 tot_id = s.id
-for b in tot: #reemplazar wall por top o tot layers
         b.state.blockedDOFs = 'xyzXYZ'
         b.state.vel = (0,0,0)
 
@@ -88,7 +86,6 @@ for s in toy:
         if s.state.pos[2]<=toy_limit:
                 toy_limit = s.state.pos[2]
                 toy_id = s.id
-for b in toy: #reemplazar wall por top o toy layers
         b.state.blockedDOFs = 'xyzXYZ'
         b.state.vel = (0,0,0)
 
@@ -96,7 +93,6 @@ for s in ejex:
         if s.state.pos[0]<=ejex_limit:
                 ejex_limit = s.state.pos[0]
                 ejex_id = s.id
-for b in ejex: #reemplazar wall por top o ejex layers
         b.state.blockedDOFs = 'xyz'
         b.state.vel = (0,0,0)
 
@@ -104,7 +100,6 @@ for s in ejexx:
         if s.state.pos[0]<=ejex_limit:
                 ejexx_limit = s.state.pos[0]
                 ejexx_id = s.id
-for b in ejexx: #reemplazar wall por top o ejexx layers
         b.state.blockedDOFs = 'xyz'
         b.state.vel = (0,0,0)
 
