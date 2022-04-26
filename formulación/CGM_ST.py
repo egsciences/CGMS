@@ -26,7 +26,7 @@ O.materials.append(FrictMat(young=5e6,poisson=0.5,frictionAngle=0,density=0,labe
 ##walls=aabbWalls([mn,mx],thickness=thick,material='walls')
 ##wallIds=O.bodies.append(walls)
 #Define Materials
-Rockfill=O.materials.append(FrictMat(young=100e6,poisson=0.3,frictionAngle=radians(30),density=2650,label='spheres'))
+Rockfill=O.materials.append(FrictMat(young=20e6,poisson=0.15,frictionAngle=radians(30),density=2500,label='spheres'))
 
 surf = gts.read(open('talud2.coarse.gts'))
 # Muestra la geometria gts en el modelo
