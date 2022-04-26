@@ -126,7 +126,7 @@ while 1:#Se busca estabilizar las particulas dentro del gts.
   if unb<stabilityThreshold:
     break
 
-O.dt=.5*PWaveTimeStep() # initial timestep, to not explode right away
+O.dt=.1*PWaveTimeStep() # initial timestep, to not explode right away
 O.usesTimeStepper=True
 
 #Display spheres with 2 colors for seeing rotations better
