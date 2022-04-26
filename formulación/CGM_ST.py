@@ -53,6 +53,7 @@ O.engines = [
                 [Ip2_FrictMat_FrictMat_FrictPhys()],
                 [Law2_ScGeom_FrictPhys_CundallStrack()]
         ),
+        GlobalStiffnessTimeStepper(active=1,timeStepUpdateInterval=100,timestepSafetyCoefficient=0.5),
         NewtonIntegrator(gravity=(0, -9.81,0), damping=0.3),
 ]
 
