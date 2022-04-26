@@ -119,7 +119,7 @@ for s in rockfill:
 #################################################################
 
 while 1:#Se busca estabilizar las particulas dentro del gts.
-  O.run(1000, True)
+  O.run(500, True)
   #the global unbalanced force on dynamic bodies, thus excluding boundaries, which are not at equilibrium
   unb=unbalancedForce()
   print('unbalanced force:',unb)
