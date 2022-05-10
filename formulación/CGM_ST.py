@@ -3,7 +3,7 @@ from itertools import count
 from turtle import pos
 ###################################################################
 ### Con stabilityThreshold=0.5 sera posible ejecutar el codigo de forma mas rapida y pasar a la etapa del triaxial
-readParamsFromTable(rParticle=0.005, rRelFuzz=0,rCoff=2,bot_limit=1,width=1,tot_limit=1,toy_limit=1,ejex_limit=5.5,num_spheres=500,thick = 0.01,key='_define_a_name_',stabilityThreshold=0.01)##Ojo,que el primer while del unbalanced force nunca llego al valor 0.01 del stabilityThreshold
+readParamsFromTable(rParticle=0.03, rRelFuzz=0,rCoff=2,bot_limit=1,width=1,tot_limit=1,toy_limit=1,ejex_limit=5.5,num_spheres=500,thick = 0.01,key='_define_a_name_',stabilityThreshold=0.01)##Ojo,que el primer while del unbalanced force nunca llego al valor 0.01 del stabilityThreshold
 from yade.params.table import *
 from numpy import arange
 from yade import pack
@@ -26,7 +26,7 @@ O.materials.append(FrictMat(young=5e6,poisson=0.5,frictionAngle=0,density=0,labe
 ##walls=aabbWalls([mn,mx],thickness=thick,material='walls')
 ##wallIds=O.bodies.append(walls)
 #Define Materials
-Rockfill=O.materials.append(FrictMat(young=20e6,poisson=0.15,frictionAngle=radians(30),density=2500,label='spheres'))
+Rockfill=O.materials.append(FrictMat(young=20e6,poisson=0.15,frictionAngle=radians(10),density=2500,label='spheres'))
 
 surf = gts.read(open('talud2.coarse.gts'))
 # Muestra la geometria gts en el modelo
@@ -37,11 +37,13 @@ surf = gts.read(open('talud2.coarse.gts'))
 # It does away with about 3k spheres for rParticle 3e-2
 sp1 = SpherePack()
 sp1 = pack.randomDensePack(pack.inGtsSurface(surf),radius=rParticle,material=Rockfill, rRelFuzz=rRelFuzz,spheresInCell=num_spheres, memoizeDb='/tmp/gts-triax.sqlite', returnSpherePack=True)
-rockfill = sp1.toSimulation()
+rockfill = sp1.toSimulation(color=(0,1,1),material=Rockfill)
 
-############################################
 ### PRIMER ENGINE DE PRUEBA ###
 ############################################
+def Changecolor():
+        for s in rockfill: 
+                s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
 
 O.engines = [
         ForceResetter(),
@@ -53,10 +55,12 @@ O.engines = [
                 [Ip2_FrictMat_FrictMat_FrictPhys()],
                 [Law2_ScGeom_FrictPhys_CundallStrack()]
         ),
-        GlobalStiffnessTimeStepper(active=1,timeStepUpdateInterval=100,timestepSafetyCoefficient=0.8),
+        GlobalStiffnessTimeStepper(active=1,timeStepUpdateInterval=100,timestepSafetyCoefficient=0.8),   
         NewtonIntegrator(gravity=(0, -9.81,0), damping=0.3),
+        PyRunner(command='Changecolor',iterPeriod=1)
 ]
 
+        
 ##Aqui podria ir la condicion de estabilidad de las particulas dentro del gts, como se muestra a continuacion##
 
 #Fija las pastirculas exteriores de la figura en cada eje
@@ -75,7 +79,8 @@ for s in bot:
                 bot_id = s.id
         s.state.blockedDOFs = 'xyzXYZ'
         s.state.vel = (0,0,0)
-        s.shape.color=(72/255.,72/255.,147/255.)
+        s.shape.color=(255.,0.,0.)
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
         
 for s in tot:
         if s.state.pos[2]<=tot_limit:
@@ -83,7 +88,8 @@ for s in tot:
                 tot_id = s.id
         s.state.blockedDOFs = 'xyzXYZ'
         s.state.vel = (0,0,0)
-        s.shape.color=(72/255.,72/255.,147/255.)
+        s.shape.color=(255.,0.,0.)
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
         
 for s in toy:
         if s.state.pos[2]<=toy_limit:
@@ -91,7 +97,8 @@ for s in toy:
                 toy_id = s.id
         s.state.blockedDOFs = 'xyzXYZ'
         s.state.vel = (0,0,0)
-        s.shape.color=(72/255.,72/255.,147/255.)
+        s.shape.color=(255.,0.,0.)
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
         
 for s in ejex:
         if s.state.pos[0]<=ejex_limit:
@@ -99,7 +106,8 @@ for s in ejex:
                 ejex_id = s.id
         s.state.blockedDOFs = 'xyz'
         s.state.vel = (0,0,0)
-        s.shape.color=(72/255.,72/255.,147/255.)
+        s.shape.color=(255.,0.,0.)
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
         
 for s in ejexx:
         if s.state.pos[0]<=ejex_limit:
@@ -107,13 +115,18 @@ for s in ejexx:
                 ejexx_id = s.id
         s.state.blockedDOFs = 'xyz'
         s.state.vel = (0,0,0)
-        s.shape.color=(72/255.,72/255.,147/255.)
+        s.shape.color=(255.,0.,0.)
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
+
+#for s in O.bodies: 
+        #s.shape.color=scalarOnColorScale(s.state.rot().norm(),0,pi/2.)
         
 count=0
 for s in rockfill:
         if O.bodies[s].state.pos[1]<0:
                 count+=1
-        print(count)
+        #print(count)
+
 
 #################################################################
 ### CONDICION DE ESTABILIDAD DE LAS PARTICULAS DENTRO DEL GTS ###
@@ -133,7 +146,7 @@ O.usesTimeStepper=True
 #Display spheres with 2 colors for seeing rotations better
 Gl1_Sphere.stripes=0
 yade.qt.Controller(), yade.qt.View()
-
+        
 ##############################
 ### ELIMINAR EL GTS###
 ##############################
