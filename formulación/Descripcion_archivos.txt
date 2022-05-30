@@ -1,0 +1,8 @@
+CGM_ST : Codigo sin triaxial, con talud estable
+CGM_ST2: Codigo sin triaxial con talud inestable
+CGM_CT: Codigo con triaxial
+CGM_STT: Codigo sin triaxial con talud estable y con gts en paralelepipedo
+talud.coarse.gts: gts talud inestable
+talud2.coarse.gts: gts talud estable (sin modificar)
+talud3.coarse.gts : gts talud estable con escala aumentada X=150, Y=60, Z=10
+gts_paralelepipedo: paredes gts forma paralelepipedo, impide que las particulas caigan fuera
